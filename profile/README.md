@@ -1,72 +1,64 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Xelvo-Infra/.github/refs/heads/main/profile/img/xelvo-banner.png" alt="Xelvo" width="100%" />
-</p>
+# SKALA
 
-<br>
+Real-time abuse detection for modern SaaS.
 
-<p align="center">
-  <strong>The infrastructure layer for AI agents on Kubernetes.</strong>
-</p>
-
-<p align="center">
-  <sub>Deploy agents. Connect tools. Govern operations. Monitor everything.</sub>
-</p>
-
-<br>
-
-<p align="center">
-  🌐 <a href="https://xelorinfra.lovable.app/">Website</a>&nbsp;&nbsp;&nbsp;
-  📖 <a href="#">Docs</a>&nbsp;&nbsp;&nbsp;
-  💬 <a href="#">Discord</a>&nbsp;&nbsp;&nbsp;
-  🐦 <a href="https://x.com/xelvo_infra">Twitter</a>&nbsp;&nbsp;&nbsp;
-  📸 <a href="https://www.instagram.com/xelvo.infra/">Instagram</a>&nbsp;&nbsp;&nbsp;
-  💼 <a href="https://www.linkedin.com/company/xelvo/">LinkedIn</a>
-</p>
-
-<br>
+Stop fake signups, trial abuse, and automated attacks before they hit your backend.
 
 ---
 
-<br>
+## What SKALA Is
 
-Agents are moving into production — managing infrastructure, triaging incidents, making real decisions. The tooling to build them exists. The infrastructure to run them safely doesn't.
+SKALA is an API that scores events like **signups, logins, and checkouts** and returns a risk score in real time.
 
-We're building it.
+```
+ALLOW   → 0–39
+STEP_UP → 40–69
+BLOCK   → 70–100
+```
 
-<br>
+Example response:
 
----
-
-<br>
-
-### 📦&nbsp; Repositories
-
-<br>
-
-<a href="https://github.com/Xelvo-Infra/xelvo">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=Xelvo-Infra&repo=xelvo&theme=dark&hide_border=true&bg_color=0d1117" />
-</a>
-
-<br><br>
-
-### 👥&nbsp; Team
-
-<br>
-
-<a href="https://github.com/dev-dami">
-  <img src="https://github.com/dev-dami.png" width="60" height="60" style="border-radius:50%" alt="dev-dami" />
-</a>
-
-&nbsp;&nbsp;**[@dev-dami](https://github.com/dev-dami)** — CEO & CTO
-
-<br><br>
+```json
+{
+  "risk_score": 87,
+  "decision": "block",
+  "reason_codes": ["SIG_IP_VELOCITY", "SIG_DEVICE_REUSE"]
+}
+```
 
 ---
 
-<p align="center">
-  <br>
-  <sub>Go&nbsp;&nbsp;·&nbsp;&nbsp;Kubernetes&nbsp;&nbsp;·&nbsp;&nbsp;MCP&nbsp;&nbsp;·&nbsp;&nbsp;Open Source</sub>
-  <br><br>
-  <a href="https://github.com/Xelvo-Infra/xelvo">⭐&nbsp; Star the repo</a>
-  <br><br>
-</p>
+## Example
+
+```ts
+import { createSkalaClient } from "skala"
+
+const skala = createSkalaClient({
+  apiKey: process.env.SKALA_API_KEY
+})
+
+const result = await skala.score({
+  event: "signup",
+  ip: req.ip,
+  email: user.email
+})
+```
+
+---
+
+## Repositories
+
+* **https://github.com/SKALA-sec/SKALA-TS-SDK** — official Node SDK
+* **docs** — developer documentation
+
+---
+
+## Links
+
+Website
+
+[https://skala.dev](https://skala.dev)
+
+Docs
+
+[https://docs.skala.dev](https://docs.skala.dev)
